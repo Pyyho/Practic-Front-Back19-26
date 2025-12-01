@@ -1,0 +1,108 @@
+.technology-card {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px 0;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.technology-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Стили для разных статусов */
+.technology-card.completed {
+    border-left: 6px solid #4caf50;
+    background-color: #f8fff8;
+}
+
+.technology-card.in-progress {
+    border-left: 6px solid #ff9800;
+    background-color: #fffaf0;
+}
+
+.technology-card.not-started {
+    border-left: 6px solid #f44336;
+    background-color: #fff5f5;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    margin: 0;
+    color: #333;
+    font-size: 1.3em;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-badge.completed {
+    background-color: #4caf50;
+    color: white;
+}
+
+.status-badge.in-progress {
+    background-color: #ff9800;
+    color: white;
+}
+
+.status-badge.not-started {
+    background-color: #f44336;
+    color: white;
+}
+
+.card-description {
+    color: #666;
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+.progress-indicator {
+    margin-top: 15px;
+}
+
+.indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.indicator.completed {
+    background-color: #4caf50;
+    color: white;
+}
+
+.indicator.in-progress {
+    background-color: #ff9800;
+    color: white;
+    animation: spin 2s linear infinite;
+}
+
+.indicator.not-started {
+    background-color: #e0e0e0;
+    color: #666;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
