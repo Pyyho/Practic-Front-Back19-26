@@ -1,0 +1,92 @@
+.technology-filter {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.technology-filter h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.filter-btn {
+    padding: 12px 24px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    color: #333;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+}
+
+.filter-btn:hover {
+    border-color: #667eea;
+    background-color: #f8f9ff;
+    color: #667eea;
+}
+
+.filter-btn.active {
+    background-color: #667eea;
+    color: white;
+    border-color: #667eea;
+    font-weight: 600;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+    .technology-filter {
+        padding: 15px;
+    }
+    
+    .filter-buttons {
+        gap: 8px;
+    }
+    
+    .filter-btn {
+        min-width: 100px;
+        padding: 10px 15px;
+        font-size: 13px;
+        height: 40px;
+    }
+    
+    .technology-filter h3 {
+        font-size: 1.1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .filter-btn {
+        min-width: 80px;
+        padding: 8px 12px;
+        font-size: 12px;
+        height: 36px;
+    }
+    
+    .filter-buttons {
+        gap: 5px;
+    }
+}

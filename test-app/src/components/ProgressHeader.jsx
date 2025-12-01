@@ -10,6 +10,27 @@ function ProgressHeader({ technologies }) {
     // Процент выполнения
     const progressPercentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
+    // Самая популярная категория (можно расширить при добавлении категорий)
+    const getMostCommonCategory = () => {
+        const statusCounts = {
+            'completed': completed,
+            'in-progress': inProgress,
+            'not-started': notStarted
+        };
+        
+        const maxStatus = Object.keys(statusCounts).reduce((a, b) => 
+            statusCounts[a] > statusCounts[b] ? a : b
+        );
+        
+        const statusNames = {
+            'completed': 'Изученные',
+            'in-progress': 'В процессе',
+            'not-started': 'Не начатые'
+        };
+        
+        return statusNames[maxStatus] || 'Не начатые';
+    };
+
     return (
         <div className="progress-header">
             <div className="stats-container">
@@ -34,6 +55,9 @@ function ProgressHeader({ technologies }) {
             <div className="progress-container">
                 <div className="progress-info">
                     <span className="progress-text">Общий прогресс: {progressPercentage}%</span>
+                    <span className="progress-detail">
+                        Большинство: {getMostCommonCategory()}
+                    </span>
                 </div>
                 <div className="progress-bar">
                     <div 
