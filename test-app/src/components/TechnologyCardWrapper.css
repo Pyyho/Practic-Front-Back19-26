@@ -2,6 +2,9 @@
     padding: 5px;
     border-radius: 14px;
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Занимаем всю высоту */
 }
 
 .card-wrapper.completed {
@@ -19,4 +22,11 @@
 .card-wrapper:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Обеспечиваем растягивание карточки внутри обертки */
+.card-wrapper > * {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }

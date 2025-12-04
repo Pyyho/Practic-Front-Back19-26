@@ -10,6 +10,10 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px; /* Минимальная высота для одинаковых карточек */
+    animation: fadeIn 0.5s ease-out;
 }
 
 .technology-card:hover {
@@ -22,10 +26,11 @@
 .card-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center; /* Выравнивание по центру */
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #f0f0f0;
+    min-height: 60px; /* Фиксированная высота для заголовка */
 }
 
 .card-title {
@@ -34,6 +39,7 @@
     font-size: 1.4em;
     font-weight: 600;
     flex: 1;
+    line-height: 1.3;
 }
 
 /* Бейдж статуса */
@@ -46,6 +52,11 @@
     margin-left: 10px;
     white-space: nowrap;
     border: 1px solid;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px; /* Фиксированная ширина для выравнивания */
+    text-align: center;
 }
 
 .status-badge.completed {
@@ -76,6 +87,8 @@
     background-color: #fafafa;
     border-radius: 6px;
     border-left: 3px solid #ddd;
+    flex: 1; /* Занимает доступное пространство */
+    min-height: 80px; /* Минимальная высота для описания */
 }
 
 /* Индикатор прогресса */
@@ -83,21 +96,22 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: auto; /* Прижимаем к низу карточки */
     padding-top: 15px;
     border-top: 1px dashed #e0e0e0;
+    min-height: 50px; /* Фиксированная высота */
 }
 
-.indicator {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-weight: bold;
-    font-size: 1.2em;
-    border: 2px solid;
+.click-hint {
+    font-size: 0.85em;
+    color: #78909c;
+    font-style: italic;
+    background-color: #f8f9fa;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px dashed #b0bec5;
+    text-align: right;
+    margin-left: auto; /* Выравниваем вправо */
 }
 
 .indicator.completed {
@@ -182,36 +196,163 @@
     .technology-card {
         padding: 15px;
         margin: 10px 0;
+        min-height: 250px;
     }
     
     .card-header {
         flex-direction: column;
         align-items: flex-start;
+        min-height: auto;
     }
     
     .card-title {
         font-size: 1.2em;
         margin-bottom: 8px;
+        width: 100%;
     }
     
     .status-badge {
         align-self: flex-start;
         margin-left: 0;
+        min-width: 90px;
+        font-size: 0.8em;
+        padding: 4px 10px;
     }
     
     .progress-indicator {
         flex-direction: column;
         align-items: flex-start;
         gap: 10px;
+        min-height: auto;
     }
     
     .click-hint {
-        font-size: 0.8em;
-        padding: 4px 8px;
+        align-self: flex-end;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .notes-toggle-btn {
+        max-width: 100%;
     }
 }
 
 /* Для отступов между карточками в сетке */
 .technologies-grid {
     gap: 20px !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    align-items: stretch; /* Выравниваем карточки по высоте */
+}
+
+.technologies-grid > * {
+    height: 100%; /* Занимаем всю высоту ячейки */
+}
+
+/* Добавьте эти стили в конец файла TechnologyCard.css */
+
+/* Стили для кнопки заметок */
+.notes-button-container {
+    margin: 15px 0;
+    padding: 10px 0;
+    border-top: 1px dashed #e0e0e0;
+    border-bottom: 1px dashed #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notes-toggle-btn {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 200px; /* Ограничим максимальную ширину */
+    min-height: 40px; /* Фиксированная высота */
+}
+
+.notes-toggle-btn:hover {
+    background: linear-gradient(135deg, #5a0cb9 0%, #1c65ec 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(106, 17, 203, 0.3);
+}
+
+.notes-indicator {
+    color: #4caf50;
+    font-size: 24px;
+    margin-left: 5px;
+}
+
+/* Стили для секции заметок */
+.notes-section {
+    margin: 15px 0;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.notes-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.notes-textarea:focus {
+    outline: none;
+    border-color: #6a11cb;
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+.notes-hint {
+    font-size: 12px;
+    color: #78909c;
+    margin-top: 5px;
+    text-align: right;
+    font-style: italic;
+}
+
+/* Адаптивность для заметок */
+@media (max-width: 768px) {
+    .notes-toggle-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .notes-textarea {
+        padding: 10px;
+        font-size: 13px;
+    }
+}
+
+/* Анимация для появления заметок */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 200px;
+    }
+}
+
+.notes-section {
+    animation: slideDown 0.3s ease-out;
 }
