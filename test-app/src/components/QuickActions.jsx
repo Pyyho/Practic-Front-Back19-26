@@ -1,68 +1,108 @@
+import { useState } from 'react';
 import './QuickActions.css';
+import Modal from './Modal';
 
-function QuickActions({ technologies, setTechnologies }) {
-    // Отметить все как выполненные
-    const markAllCompleted = () => {
-        setTechnologies(prev => 
-            prev.map(tech => ({ ...tech, status: 'completed' }))
-        );
-    };
+function QuickActions({ 
+    technologies, 
+    onMarkAllCompleted, 
+    onResetAll, 
+    onExport, 
+    onResetData 
+}) {
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [actionType, setActionType] = useState('');
 
-    // Сбросить все статусы
-    const resetAllStatuses = () => {
-        setTechnologies(prev => 
-            prev.map(tech => ({ ...tech, status: 'not-started' }))
-        );
-    };
-
-    // Случайный выбор следующей технологии
-    const randomNextTechnology = () => {
-        const notStarted = technologies.filter(tech => tech.status === 'not-started');
-        if (notStarted.length === 0) return;
-        
-        const randomTech = notStarted[Math.floor(Math.random() * notStarted.length)];
-        const updatedTechs = technologies.map(tech => 
-            tech.id === randomTech.id 
-                ? { ...tech, status: 'in-progress' }
-                : tech
-        );
-        setTechnologies(updatedTechs);
-        
-        // Прокрутка к выбранной технологии
-        const element = document.getElementById(`tech-${randomTech.id}`);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const handleAction = (action) => {
+        switch(action) {
+            case 'complete':
+                onMarkAllCompleted();
+                break;
+            case 'reset':
+                onResetAll();
+                break;
+            case 'export':
+                onExport();
+                break;
+            case 'resetData':
+                setActionType('resetData');
+                setShowConfirmModal(true);
+                break;
+            default:
+                break;
         }
     };
 
+    const confirmResetData = () => {
+        onResetData();
+        setShowConfirmModal(false);
+    };
+
+    // Проверка доступности действий
+    const allCompleted = technologies.every(tech => tech.status === 'completed');
+    const allNotStarted = technologies.every(tech => tech.status === 'not-started');
+
     return (
         <div className="quick-actions">
-            <h3>Быстрые действия</h3>
+            <h3>⚡ Быстрые действия</h3>
             <div className="action-buttons">
                 <button 
                     className="action-btn complete-all"
-                    onClick={markAllCompleted}
-                    disabled={technologies.every(tech => tech.status === 'completed')}
+                    onClick={() => handleAction('complete')}
+                    disabled={allCompleted}
+                    title={allCompleted ? "Все технологии уже изучены" : "Отметить все технологии как изученные"}
                 >
                     ✅ Отметить все как выполненные
                 </button>
                 
                 <button 
                     className="action-btn reset-all"
-                    onClick={resetAllStatuses}
-                    disabled={technologies.every(tech => tech.status === 'not-started')}
+                    onClick={() => handleAction('reset')}
+                    disabled={allNotStarted}
+                    title={allNotStarted ? "Все технологии уже не начаты" : "Сбросить статусы всех технологий"}
                 >
                     🔄 Сбросить все статусы
                 </button>
                 
                 <button 
-                    className="action-btn random-next"
-                    onClick={randomNextTechnology}
-                    disabled={technologies.filter(tech => tech.status === 'not-started').length === 0}
+                    className="action-btn export-data"
+                    onClick={() => handleAction('export')}
                 >
-                    🎲 Случайная следующая технология
+                    📥 Экспорт данных
+                </button>
+                
+                <button 
+                    className="action-btn reset-data"
+                    onClick={() => handleAction('resetData')}
+                >
+                    🗑️ Сбросить все данные
                 </button>
             </div>
+
+            {/* Модальное окно подтверждения сброса данных */}
+            <Modal
+                isOpen={showConfirmModal}
+                onClose={() => setShowConfirmModal(false)}
+                title="⚠️ Подтверждение действия"
+            >
+                <div className="confirm-modal-content">
+                    <p>Вы уверены, что хотите сбросить ВСЕ данные?</p>
+                    <p className="warning-text">Это действие удалит все ваши заметки, прогресс и настройки. Отменить его будет невозможно!</p>
+                    <div className="modal-buttons">
+                        <button 
+                            className="modal-btn cancel-btn"
+                            onClick={() => setShowConfirmModal(false)}
+                        >
+                            Отмена
+                        </button>
+                        <button 
+                            className="modal-btn confirm-btn"
+                            onClick={confirmResetData}
+                        >
+                            Да, сбросить все
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }

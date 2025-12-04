@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './TechnologyCard.css';
 
-function TechnologyCard({ id, title, description, status, notes, onStatusChange, onNotesChange }) {
+function TechnologyCard({ id, title, description, status, notes, category, onStatusChange, onNotesChange }) {
     // Состояние для отображения/скрытия заметок
     const [showNotes, setShowNotes] = useState(false);
     const [localNotes, setLocalNotes] = useState(notes || '');
@@ -51,6 +51,30 @@ function TechnologyCard({ id, title, description, status, notes, onStatusChange,
         return statusMap[status] || status;
     };
 
+    // Функция для получения иконки категории
+    const getCategoryIcon = (cat) => {
+        switch (cat) {
+            case 'frontend':
+                return '🎨';
+            case 'backend':
+                return '⚙️';
+            default:
+                return '📁';
+        }
+    };
+
+    // Функция для получения названия категории на русском
+    const getCategoryName = (cat) => {
+        switch (cat) {
+            case 'frontend':
+                return 'Фронтенд';
+            case 'backend':
+                return 'Бэкенд';
+            default:
+                return cat;
+        }
+    };
+
     // Функция для отображения индикатора прогресса
     const renderProgressIndicator = (status) => {
         switch (status) {
@@ -72,11 +96,17 @@ function TechnologyCard({ id, title, description, status, notes, onStatusChange,
             title="Кликните для изменения статуса"
         >
             <div className="card-header">
-                <h3 className="card-title">{title}</h3>
+                <div className="card-title-wrapper">
+                    <h3 className="card-title">{title}</h3>
+                    <span className="category-badge">
+                        {getCategoryIcon(category)} {getCategoryName(category)}
+                    </span>
+                </div>
                 <span className={`status-badge ${status}`}>
                     {getStatusText(status)}
                 </span>
             </div>
+            
             <p className="card-description">{description}</p>
             
             {/* Кнопка для заметок */}
@@ -87,7 +117,7 @@ function TechnologyCard({ id, title, description, status, notes, onStatusChange,
                     title={showNotes ? "Скрыть заметки" : "Показать заметки"}
                 >
                     📝 {showNotes ? "Скрыть заметки" : "Мои заметки"}
-                    {localNotes && <span className="notes-indicator"> •</span>}
+                    {localNotes && localNotes.trim() && <span className="notes-indicator"> •</span>}
                 </button>
             </div>
             
@@ -98,14 +128,14 @@ function TechnologyCard({ id, title, description, status, notes, onStatusChange,
                         className="notes-textarea"
                         value={localNotes}
                         onChange={handleNotesChange}
-                        placeholder="Записывайте сюда важные моменты..."
+                        placeholder="Записывайте сюда важные моменты изучения этой технологии..."
                         rows="3"
                         onClick={e => e.stopPropagation()}
                     />
                     <div className="notes-hint">
-                        {localNotes.length > 0 
+                        {localNotes && localNotes.trim() 
                             ? `Заметка сохранена (${localNotes.length} символов)` 
-                            : 'Добавьте заметку'}
+                            : 'Добавьте заметку — она сохранится автоматически'}
                     </div>
                 </div>
             )}

@@ -356,3 +356,26 @@
 .notes-section {
     animation: slideDown 0.3s ease-out;
 }
+
+/* Добавим в TechnologyCard.css */
+
+.card-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    background: #e3f2fd;
+    color: #1976d2;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 500;
+    border: 1px solid #bbdefb;
+    width: fit-content;
+}
