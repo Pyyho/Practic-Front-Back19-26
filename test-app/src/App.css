@@ -5,7 +5,64 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Выравниваем все по центру */
+    align-items: center;
+}
+
+.main-content {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.page {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.page-header h1 {
+    margin: 0 0 15px 0;
+    font-size: 2.5em;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.page-header p {
+    margin: 0;
+    font-size: 1.2em;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    color: #333;
 }
 
 /* Стили для заголовка приложения */
@@ -113,20 +170,8 @@
 }
 
 /* Глобальные стили */
-* {
-    box-sizing: border-box;
-}
 
-body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-    color: #333;
-}
+
 
 /* Анимации */
 @keyframes fadeIn {
@@ -314,6 +359,14 @@ body {
     .App {
         padding: 15px;
     }
+
+    .page-header {
+        padding: 20px;
+    }
+
+    .page-header h1 {
+        font-size: 2em;
+    }
     
     .App-header {
         padding: 20px;
@@ -391,6 +444,16 @@ body {
     .filter-btn {
         width: 100%;
         max-width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h1 {
+        font-size: 1.8em;
+    }
+    
+    .page {
+        padding: 20px;
     }
 }
 
