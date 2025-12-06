@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useSettings } from "../context/SettingsContext";
 import ProgressBar from '../components/ProgressBar';
 import './Home.css';
 
 function Home() {
+    const { settings } = useSettings();
     const [technologies, setTechnologies] = useState([]);
     const [stats, setStats] = useState({
         total: 0,
@@ -26,13 +28,13 @@ function Home() {
         if (saved) {
             const techData = JSON.parse(saved);
             setTechnologies(techData);
-            
+
             const total = techData.length;
             const completed = techData.filter(tech => tech.status === 'completed').length;
             const inProgress = techData.filter(tech => tech.status === 'in-progress').length;
             const notStarted = techData.filter(tech => tech.status === 'not-started').length;
             const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
-            
+
             // Статистика по категориям
             const categoryStats = {};
             techData.forEach(tech => {
@@ -48,13 +50,13 @@ function Home() {
                 categoryStats[tech.category].total++;
                 categoryStats[tech.category][tech.status]++;
             });
-            
+
             // Рассчитываем прогресс по категориям
             Object.keys(categoryStats).forEach(category => {
                 const catStats = categoryStats[category];
                 catStats.progress = Math.round((catStats.completed / catStats.total) * 100);
             });
-            
+
             // Недавняя активность (последние изменения)
             const activity = [];
             techData.forEach(tech => {
@@ -69,10 +71,10 @@ function Home() {
                     });
                 }
             });
-            
+
             activity.sort((a, b) => b.date - a.date);
             setRecentActivity(activity.slice(0, 5));
-            
+
             setStats({
                 total,
                 completed,
@@ -181,10 +183,11 @@ function Home() {
             <div className="hero-section">
                 <h1>🚀 Добро пожаловать в Трекер технологий!</h1>
                 <p className="hero-subtitle">
-                    Отслеживайте свой прогресс в изучении {stats.total} технологий. 
+                    Отслеживайте свой прогресс в изучении {stats.total} технологий.
                     {stats.progress > 0 ? ` Вы уже изучили ${stats.completed} из них!` : ' Начните прямо сейчас!'}
                 </p>
             </div>
+
 
             <div className="quick-stats">
                 <div className="stat-card overview">
@@ -194,7 +197,7 @@ function Home() {
                         <div className="stat-label">Общий прогресс</div>
                     </div>
                 </div>
-                
+
                 <div className="stat-grid">
                     <div className="stat-card">
                         <div className="stat-icon">📚</div>
@@ -203,7 +206,7 @@ function Home() {
                             <div className="stat-label">Всего технологий</div>
                         </div>
                     </div>
-                    
+
                     <div className="stat-card completed">
                         <div className="stat-icon">✅</div>
                         <div className="stat-content">
@@ -211,7 +214,7 @@ function Home() {
                             <div className="stat-label">Изучено</div>
                         </div>
                     </div>
-                    
+
                     <div className="stat-card in-progress">
                         <div className="stat-icon">🔄</div>
                         <div className="stat-content">
@@ -219,7 +222,7 @@ function Home() {
                             <div className="stat-label">В процессе</div>
                         </div>
                     </div>
-                    
+
                     <div className="stat-card not-started">
                         <div className="stat-icon">⭕</div>
                         <div className="stat-content">
@@ -244,14 +247,14 @@ function Home() {
                         {stats.completed} из {stats.total} технологий изучено
                     </span>
                     <div className="progress-actions">
-                        <button 
+                        <button
                             onClick={() => handleQuickAction('markAllCompleted')}
                             className="progress-btn complete-btn"
                             disabled={stats.completed === stats.total}
                         >
                             ✅ Отметить все как выполненные
                         </button>
-                        <button 
+                        <button
                             onClick={() => handleQuickAction('resetAll')}
                             className="progress-btn reset-btn"
                             disabled={stats.notStarted === stats.total}
@@ -270,7 +273,7 @@ function Home() {
                             Вся статистика →
                         </Link>
                     </div>
-                    
+
                     {topCategories.length > 0 ? (
                         <div className="categories-grid">
                             {topCategories.map(([category, catStats]) => (
@@ -286,22 +289,22 @@ function Home() {
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div className="category-progress-bar">
                                         <ProgressBar
                                             progress={catStats.progress}
                                             height={12}
                                             color={
                                                 category === 'frontend' ? '#2196F3' :
-                                                category === 'backend' ? '#FF9800' :
-                                                category === 'database' ? '#4CAF50' :
-                                                category === 'devops' ? '#9C27B0' : '#795548'
+                                                    category === 'backend' ? '#FF9800' :
+                                                        category === 'database' ? '#4CAF50' :
+                                                            category === 'devops' ? '#9C27B0' : '#795548'
                                             }
                                             animated={true}
                                             showPercentage={false}
                                         />
                                     </div>
-                                    
+
                                     <div className="category-stats">
                                         <div className="category-stat">
                                             <span className="stat-label">Всего:</span>
@@ -316,7 +319,7 @@ function Home() {
                                             <span className="stat-value">{catStats.inProgress}</span>
                                         </div>
                                     </div>
-                                    
+
                                     <Link to={`/technologies?category=${category}`} className="category-link">
                                         Посмотреть технологии →
                                     </Link>
@@ -337,7 +340,7 @@ function Home() {
                             Все технологии →
                         </Link>
                     </div>
-                    
+
                     {recentActivity.length > 0 ? (
                         <div className="activity-list">
                             {recentActivity.map((activity, index) => (
@@ -407,7 +410,7 @@ function Home() {
                             </div>
                         </Link>
                     </div>
-                    
+
                     <div className="quick-tips">
                         <h3>💡 Советы по использованию:</h3>
                         <ul className="tips-list">
@@ -439,7 +442,7 @@ function Home() {
                             ) : (
                                 <p className="achievement">🚀 Начните прямо сейчас! Добавьте первую технологию!</p>
                             )}
-                            
+
                             {stats.completed > 0 && (
                                 <div className="motivation-numbers">
                                     <div className="motivation-item">

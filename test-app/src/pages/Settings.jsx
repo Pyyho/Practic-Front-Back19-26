@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useSettings } from "../context/SettingsContext";
+
 import { 
     FaSave, 
     FaMoon, 
@@ -29,7 +31,7 @@ import {
 import './Settings.css';
 
 function Settings() {
-    const [settings, setSettings] = useState({
+    const { settings, setSettings } = useSettings({
         // Тема и внешний вид
         theme: 'light',
         accentColor: '#667eea',
@@ -74,17 +76,10 @@ function Settings() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        loadSettings();
         calculateStorageStats();
     }, []);
 
-    const loadSettings = () => {
-        const saved = localStorage.getItem('appSettings');
-        if (saved) {
-            setSettings(prev => ({ ...prev, ...JSON.parse(saved) }));
-        }
-    };
-
+    
     const calculateStorageStats = () => {
         const techs = JSON.parse(localStorage.getItem('technologies') || '[]');
         const techsSize = new Blob([JSON.stringify(techs)]).size;

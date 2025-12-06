@@ -26,6 +26,18 @@
 .home-page {
     margin-top: 70px;
     padding-top: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.tech-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+.progress-bar {
+    background-color: var(--primary-color);
 }
 
 .hero-section {
