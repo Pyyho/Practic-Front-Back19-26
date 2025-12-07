@@ -181,7 +181,7 @@ function Home() {
     return (
         <div className="home-page">
             <div className="hero-section">
-                <h1>🚀 Добро пожаловать в Трекер технологий!</h1>
+                <h1 className="color-text">🚀 Добро пожаловать в Трекер технологий!</h1>
                 <p className="hero-subtitle">
                     Отслеживайте свой прогресс в изучении {stats.total} технологий.
                     {stats.progress > 0 ? ` Вы уже изучили ${stats.completed} из них!` : ' Начните прямо сейчас!'}
@@ -194,7 +194,7 @@ function Home() {
                     <div className="stat-icon">📈</div>
                     <div className="stat-content">
                         <div className="stat-number">{stats.progress}%</div>
-                        <div className="stat-label">Общий прогресс</div>
+                        <div className="color-text">Общий прогресс</div>
                     </div>
                 </div>
 
@@ -268,7 +268,7 @@ function Home() {
             <div className="home-sections">
                 <div className="section category-overview">
                     <div className="section-header">
-                        <h2>🏆 Топ категории</h2>
+                        <h2 className="color-text">🏆 Топ категории</h2>
                         <Link to="/statistics" className="view-all">
                             Вся статистика →
                         </Link>
@@ -283,7 +283,7 @@ function Home() {
                                             {getCategoryIcon(category)}
                                         </div>
                                         <div className="category-info">
-                                            <h3>{getCategoryName(category)}</h3>
+                                            <h3 className="color-text">{getCategoryName(category)}</h3>
                                             <div className="category-progress-value">
                                                 {catStats.progress}%
                                             </div>
@@ -335,7 +335,7 @@ function Home() {
 
                 <div className="section recent-activity">
                     <div className="section-header">
-                        <h2>🕒 Недавняя активность</h2>
+                        <h2 className="color-text">🕒 Недавняя активность</h2>
                         <Link to="/technologies" className="view-all">
                             Все технологии →
                         </Link>
@@ -350,7 +350,7 @@ function Home() {
                                     </div>
                                     <div className="activity-content">
                                         <div className="activity-title">
-                                            <Link to={`/technology/${activity.techId}`}>
+                                            <Link className="color-text" to={`/technology/${activity.techId}`}>
                                                 {activity.title}
                                             </Link>
                                             <span className={`activity-status ${activity.status}`}>
@@ -378,46 +378,46 @@ function Home() {
 
                 <div className="section quick-actions-home">
                     <div className="section-header">
-                        <h2>⚡ Быстрые действия</h2>
+                        <h2 className="color-text">⚡ Быстрые действия</h2>
                     </div>
                     <div className="action-grid">
                         <Link to="/add-technology" className="action-card primary">
                             <div className="action-icon">➕</div>
                             <div className="action-content">
-                                <h3>Добавить технологию</h3>
-                                <p>Добавьте новую технологию для изучения</p>
+                                <h3 className="color-text">Добавить технологию</h3>
+                                <p className="color-text">Добавьте новую технологию для изучения</p>
                             </div>
                         </Link>
                         <Link to="/technologies" className="action-card">
                             <div className="action-icon">📚</div>
                             <div className="action-content">
-                                <h3>Все технологии</h3>
-                                <p>Просмотр и управление всеми технологиями</p>
+                                <h3 className="color-text">Все технологии</h3>
+                                <p className="color-text">Просмотр и управление всеми технологиями</p>
                             </div>
                         </Link>
                         <Link to="/statistics" className="action-card">
                             <div className="action-icon">📊</div>
                             <div className="action-content">
-                                <h3>Статистика</h3>
-                                <p>Анализ прогресса и достижений</p>
+                                <h3 className="color-text">Статистика</h3>
+                                <p className="color-text">Анализ прогресса и достижений</p>
                             </div>
                         </Link>
                         <Link to="/settings" className="action-card">
                             <div className="action-icon">⚙️</div>
                             <div className="action-content">
-                                <h3>Настройки</h3>
-                                <p>Настройте приложение под себя</p>
+                                <h3 className="color-text">Настройки</h3>
+                                <p className="color-text">Настройте приложение под себя</p>
                             </div>
                         </Link>
                     </div>
 
                     <div className="quick-tips">
-                        <h3>💡 Советы по использованию:</h3>
+                        <h3 className="color-text">💡 Советы по использованию:</h3>
                         <ul className="tips-list">
-                            <li>Кликайте на карточки технологий для быстрой смены статуса</li>
-                            <li>Добавляйте заметки к каждой технологии</li>
-                            <li>Используйте фильтры для поиска нужных технологий</li>
-                            <li>Экспортируйте данные для резервного копирования</li>
+                            <li className="color-text">Кликайте на карточки технологий для быстрой смены статуса</li>
+                            <li className="color-text">Добавляйте заметки к каждой технологии</li>
+                            <li className="color-text">Используйте фильтры для поиска нужных технологий</li>
+                            <li className="color-text">Экспортируйте данные для резервного копирования</li>
                         </ul>
                     </div>
                 </div>

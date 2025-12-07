@@ -359,7 +359,7 @@ function TechnologyList() {
                     </div>
 
                     <div className="result-info">
-                        Найдено: <strong>{filteredTechnologies.length}</strong> из {technologies.length}
+                        Найдено: <strong className="color-text">{filteredTechnologies.length}</strong> из {technologies.length}
                     </div>
                 </div>
 

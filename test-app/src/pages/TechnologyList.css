@@ -827,3 +827,141 @@
         width: 100%;
     }
 }
+
+[data-theme="dark"] .control-panel
+ {
+    background: #53677a;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .hero-subtitle {
+    color: white;
+}
+
+[data-theme="dark"] .search-box
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .search-box input {
+    color: white;
+}
+
+[data-theme="dark"] .search-icon {
+    color: white;
+}
+
+[data-theme="dark"] .search-input {
+    color: white;
+}
+
+[data-theme="dark"] * {
+    color: white;
+}
+
+[data-theme="dark"] .result-info
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .action-btn.filter-btn
+ {
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(186, 104, 200, 0.1));;
+    color: #0011ff;
+    border-color: #0026ff;
+}
+
+[data-theme="dark"] .sort-select
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .sort-order-btn
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .action-btn.export-btn
+ {
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(186, 104, 200, 0.1));;
+    color: #e100ff;
+    border-color: #d400ff;
+}
+
+[data-theme="dark"] .action-btn.import-btn
+ {
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(186, 104, 200, 0.1));;
+    color: #00f7ff;
+    border-color: #00ccff;
+}
+
+
+[data-theme="dark"] .selection-controls
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .technology-card-list
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .tech-status.not-started
+ {
+    background: #410808;
+    color: #ff0000;
+    border-color: #ff0000;
+}
+
+[data-theme="dark"] .tech-status.in-progress
+ {
+    background: #5f3908;
+    color: #ff9100;
+    border-color: #ff8800;
+}
+
+[data-theme="dark"] .tech-status.completed
+ {
+    background: #0f4b03;
+    color: #00ff00;
+    border-color: #15ff00;
+}
+
+[data-theme="dark"] .tech-description {
+    color: white;
+}
+
+[data-theme="dark"] .tech-details
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .detail-link
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .quick-status-btn
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+

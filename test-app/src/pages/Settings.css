@@ -248,7 +248,7 @@ input:checked + .slider:before {
     width: 100%;
     max-width: 900px;
     padding: 30px;
-    background: #f8f9fa;
+    background: #ffffff;
     border-radius: 16px;
     border: 1px solid #e9ecef;
 }
@@ -308,7 +308,7 @@ input:checked + .slider:before {
 
 /* Информация о хранилище */
 .storage-info {
-    background: #f8f9fa;
+    background: #ffffff;
     padding: 35px;
     border-radius: 16px;
     border: 1px solid #e9ecef;
@@ -353,7 +353,7 @@ input:checked + .slider:before {
 }
 
 .storage-label {
-    color: #495057;
+    color: #000000;
     font-weight: 600;
     font-size: 1em;
 }
@@ -699,13 +699,13 @@ input:checked + .slider:before {
 }
 
 [data-theme="dark"] .storage-info {
-    background: rgba(255, 255, 255, 0.05);
+    background: #34495e;
     border-color: #4a6278;
 }
 
 [data-theme="dark"] .storage-item {
     background: #34495e;
-    border-color: #4a6278;
+    border-color: #e4e9ee;
 }
 
 [data-theme="dark"] .reset-btn {
@@ -734,6 +734,21 @@ input:checked + .slider:before {
     background: #2c3e50;
     border-color: #34495e;
 }
+
+[data-theme="dark"] .color-text {
+    color: white;
+}
+
+[data-theme="dark"] .data-actions {
+    background: #34495e;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .storage-label {
+    color: white;
+}
+
 
 /* Анимация для кнопок */
 @keyframes pulse {

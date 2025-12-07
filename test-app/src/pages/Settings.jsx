@@ -317,7 +317,7 @@ function Settings() {
             <div className="settings-sections">
                 {/* Внешний вид */}
                 <div className="settings-section">
-                    <h2><FaPalette /> Внешний вид</h2>
+                    <h2 className = "color-text"><FaPalette /> Внешний вид</h2>
                     
                     <div className="setting-item">
                         <div className="setting-info">
@@ -406,7 +406,7 @@ function Settings() {
 
                 {/* Уведомления */}
                 <div className="settings-section">
-                    <h2><FaBell /> Уведомления</h2>
+                    <h2 className = "color-text"><FaBell /> Уведомления</h2>
                     
                     <div className="setting-item">
                         <div className="setting-info">
@@ -479,7 +479,7 @@ function Settings() {
 
                 {/* Приватность */}
                 <div className="settings-section">
-                    <h2><FaLock /> Приватность</h2>
+                    <h2 className = "color-text"><FaLock /> Приватность</h2>
                     
                     <div className="setting-item">
                         <div className="setting-info">
@@ -536,7 +536,7 @@ function Settings() {
 
                 {/* Данные и резервные копии */}
                 <div className="settings-section">
-                    <h2><FaDatabase /> Данные и резервные копии</h2>
+                    <h2 className = "color-text"><FaDatabase /> Данные и резервные копии</h2>
                     
                     <div className="data-actions">
                         <button onClick={() => handleDataAction('export')} className="data-btn export-btn">
@@ -560,7 +560,7 @@ function Settings() {
                     </div>
 
                     <div className="storage-info">
-                        <h3><FaChartBar /> Статистика хранилища</h3>
+                        <h3 className="color-text"><FaChartBar /> Статистика хранилища</h3>
                         <div className="storage-stats">
                             <div className="storage-item">
                                 <span className="storage-label">Использовано памяти:</span>
@@ -635,7 +635,7 @@ function Settings() {
 
                 {/* Дополнительно */}
                 <div className="settings-section">
-                    <h2><FaLanguage /> Язык и дополнительные настройки</h2>
+                    <h2 className = "color-text"><FaLanguage /> Язык и дополнительные настройки</h2>
                     
                     <div className="setting-item">
                         <div className="setting-info">

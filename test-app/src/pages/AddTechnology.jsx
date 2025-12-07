@@ -48,10 +48,10 @@ function AddTechnology() {
 
             <form onSubmit={handleSubmit} className="add-tech-form">
                 <div className="form-section">
-                    <h2>📋 Основная информация</h2>
+                    <h2 className="color-text">📋 Основная информация</h2>
                     
                     <div className="form-group">
-                        <label htmlFor="title">
+                        <label className="color-text" htmlFor="title">
                             🏷️ Название технологии
                         </label>
                         <input
@@ -66,7 +66,7 @@ function AddTechnology() {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="description">
+                        <label className="color-text" htmlFor="description">
                             📝 Описание
                         </label>
                         <textarea
@@ -82,14 +82,14 @@ function AddTechnology() {
                 </div>
 
                 <div className="form-section">
-                    <h2>🏷️ Категория и статус</h2>
+                    <h2 className="color-text">🏷️ Категория и статус</h2>
                     
                     <div className="form-row">
                         <div className="form-group">
-                            <label htmlFor="category">
+                            <label className="color-text" htmlFor="category">
                                 🎯 Категория
                             </label>
-                            <select
+                            <select 
                                 id="category"
                                 name="category"
                                 value={formData.category}
@@ -101,7 +101,7 @@ function AddTechnology() {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="status">
+                            <label className="color-text" htmlFor="status">
                                 📊 Начальный статус
                             </label>
                             <select
@@ -119,10 +119,10 @@ function AddTechnology() {
                 </div>
 
                 <div className="form-section">
-                    <h2>📝 Заметки (необязательно)</h2>
+                    <h2 className="color-text">📝 Заметки (необязательно)</h2>
                     
                     <div className="form-group">
-                        <label htmlFor="notes">
+                        <label className="color-text" htmlFor="notes">
                             📌 Ваши заметки
                         </label>
                         <textarea

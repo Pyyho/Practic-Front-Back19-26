@@ -365,7 +365,7 @@
 .stat-label {
     display: block;
     font-size: 0.85em;
-    color: #000000;
+    color: #ffffff;
     margin-bottom: 5px;
     font-weight: 500;
 }
@@ -373,7 +373,7 @@
 .category-stat .stat-label {
     display: block;
     font-size: 0.85em;
-    color: #6c757d;
+    color: #ffffff;
     margin-bottom: 8px;
     font-weight: 500;
     line-height: 1.3;
@@ -871,3 +871,101 @@
         height: 60px;
     }
 }
+
+[data-theme="dark"] .stat-card {
+    background: #2c3e50;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .stat-label {
+    color: white;
+}
+
+[data-theme="dark"] .main-progress {
+    background: #2c3e50;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .progress-label {
+    color: white;
+}
+
+[data-theme="dark"] .section {
+    background: #2c3e50;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .color-text {
+    color: white;
+}
+
+[data-theme="dark"] .category-stats
+ {
+    background: #2c3e50;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .stat-value {
+    color: white;
+}
+
+[data-theme="dark"] .activity-item
+ {
+    background: #2c3e50;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .activity-status.completed {
+    background: #37473c;
+    color: #00e74d;
+    border-color: #377444;
+}
+
+[data-theme="dark"] .activity-status.in-progress
+ {
+    background: #57481f;
+    color: #ffbb00;
+    border-color: #ffc508;
+}
+
+[data-theme="dark"] .activity-status.not-started {
+    background: #470404;
+    color: #ff0000;
+    border-color: #ff0000;
+}
+
+[data-theme="dark"] .activity-icon
+ {
+    background: #53677a;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .activity-category
+ {
+    background: #53677a;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .activity-date {
+    color: white;
+}
+
+[data-theme="dark"] .action-card
+ {
+    background: #53677a;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .hero-subtitle {
+    color: white;
+}
+
+

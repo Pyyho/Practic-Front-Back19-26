@@ -253,3 +253,30 @@
         font-size: 1.3em;
     }
 }
+
+[data-theme="dark"] .form-section
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .color-text {
+    color: white;
+}
+
+[data-theme="dark"] .category-list
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .form-group input {
+    color: black;
+}
+
+[data-theme="dark"] .form-group textarea {
+    color: black;
+}
+
