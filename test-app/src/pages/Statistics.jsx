@@ -375,7 +375,7 @@ function Statistics() {
             {/* Контролы времени */}
             <div className="time-controls">
                 <div className="time-label">
-                    <FaCalendarAlt /> Период:
+                    <FaCalendarAlt  /> Период:
                 </div>
                 <div className="time-buttons">
                     <button 
@@ -497,7 +497,7 @@ function Statistics() {
             <div className="main-chart-section">
                 {activeChart === 'category' && (
                     <div className="chart-container">
-                        <h3><FaChartPie /> Распределение по категориям</h3>
+                        <h3 className="color-text"><FaChartPie /> Распределение по категориям</h3>
                         <div className="categories-chart">
                             {sortedCategories.length > 0 ? (
                                 <>
@@ -547,7 +547,7 @@ function Statistics() {
 
                 {activeChart === 'status' && (
                     <div className="chart-container">
-                        <h3><FaChartBar /> Распределение по статусам</h3>
+                        <h3 className="color-text"><FaChartBar /> Распределение по статусам</h3>
                         <div className="status-chart">
                             <div className="status-bars">
                                 <div className="status-bar-item completed">
@@ -604,7 +604,7 @@ function Statistics() {
 
                 {activeChart === 'trend' && (
                     <div className="chart-container">
-                        <h3><FaChartLine /> Динамика прогресса</h3>
+                        <h3 className="color-text"><FaChartLine /> Динамика прогресса</h3>
                         <div className="trend-chart">
                             {stats.trends.length > 0 ? (
                                 <div className="trend-lines">
@@ -652,7 +652,7 @@ function Statistics() {
 
             {/* Достижения */}
             <div className="achievements-section">
-                <h3><FaTrophy /> Достижения</h3>
+                <h3 className="color-text"><FaTrophy /> Достижения</h3>
                 <div className="achievements-grid">
                     {achievements.length > 0 ? (
                         achievements.map(achievement => (
@@ -661,8 +661,8 @@ function Statistics() {
                                     {achievement.unlocked ? achievement.title.split(' ')[0] : '🔒'}
                                 </div>
                                 <div className="achievement-content">
-                                    <h4>{achievement.title}</h4>
-                                    <p>{achievement.description}</p>
+                                    <h4 className="color-text">{achievement.title}</h4>
+                                    <p className="color-text">{achievement.description}</p>
                                     {!achievement.unlocked && (
                                         <div className="achievement-progress">
                                             <ProgressBar
@@ -692,7 +692,7 @@ function Statistics() {
 
             {/* Инсайты */}
             <div className="insights-section">
-                <h3><FaLightbulb /> Инсайты и рекомендации</h3>
+                <h3 className="color-text"><FaLightbulb /> Инсайты и рекомендации</h3>
                 <div className="insights-grid">
                     {insights.length > 0 ? (
                         insights.map((insight, index) => (
@@ -714,7 +714,7 @@ function Statistics() {
             {/* Детальная статистика */}
             <div className="detailed-stats">
                 <div className="stats-section">
-                    <h4><FaCalendarCheck /> Ежемесячная активность</h4>
+                    <h4 className="color-text"><FaCalendarCheck /> Ежемесячная активность</h4>
                     <div className="monthly-stats">
                         {Object.entries(stats.byMonth).slice(-6).reverse().map(([key, month]) => (
                             <div key={key} className="month-stat">
@@ -737,7 +737,7 @@ function Statistics() {
                 </div>
 
                 <div className="stats-section">
-                    <h4>📊 Детали по категориям</h4>
+                    <h4 className="color-text">📊 Детали по категориям</h4>
                     <div className="category-details">
                         {sortedCategories.map(([category, catStats]) => (
                             <div key={category} className="category-detail">

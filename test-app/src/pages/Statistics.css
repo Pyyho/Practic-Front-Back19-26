@@ -857,3 +857,81 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+[data-theme="dark"] .time-controls {
+    background: #34495e;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .color-text {
+    color: white;
+}
+
+[data-theme="dark"] .time-label {
+    color: white;
+}
+
+[data-theme="dark"] .time-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: 34495e;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .chart-selector {
+    background: #34495e;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .main-chart-section {
+    background: #34495e;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .achievements-section, .insights-section {
+    background: #34495e;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .status-name {
+    color: white;
+}
+
+[data-theme="dark"] .achievement-card.unlocked {
+    background: #628bb4;
+    color: #ecf0f1;
+    border-color: #ffffff;
+}
+
+[data-theme="dark"] .stats-section {
+    background: #34495e;
+    color: #ecf0f1;
+    border-color: #34495e;
+}
+
+[data-theme="dark"] .month-stat {
+    background: #34495e;
+    color: #ecf0f1;
+    border-color: #0080ff;
+}
+
+[data-theme="dark"] .month-name {
+    color: white;
+}
+
+[data-theme="dark"] .detail-name {
+    color: white;
+}
+
+[data-theme="dark"] .detail-progress {
+    color: white;
+}
+
+[data-theme="dark"] .detail-stats {
+    background: #1d2a36;
+    color: #ecf0f1;
+    border-color: #007af5;
+}

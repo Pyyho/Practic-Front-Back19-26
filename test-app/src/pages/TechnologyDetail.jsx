@@ -88,6 +88,25 @@ function TechnologyDetail() {
         }
     };
 
+    const getNextStatus = () => {
+        switch (technology.status) {
+            case 'not-started': return 'in-progress';
+            case 'in-progress': return 'completed';
+            case 'completed': return 'not-started';
+            default: return 'not-started';
+        }
+    };
+
+    const getNextStatusName = () => {
+        const nextStatus = getNextStatus();
+        switch (nextStatus) {
+            case 'completed': return 'Изучено';
+            case 'in-progress': return 'В процессе';
+            case 'not-started': return 'Не начато';
+            default: return nextStatus;
+        }
+    };
+
     const getCategoryIcon = (category) => {
         switch (category) {
             case 'frontend': return '🎨';
@@ -101,15 +120,6 @@ function TechnologyDetail() {
             case 'frontend': return 'Фронтенд';
             case 'backend': return 'Бэкенд';
             default: return category;
-        }
-    };
-
-    const getNextStatus = () => {
-        switch (technology.status) {
-            case 'not-started': return 'in-progress';
-            case 'in-progress': return 'completed';
-            case 'completed': return 'not-started';
-            default: return 'not-started';
         }
     };
 
@@ -144,42 +154,54 @@ function TechnologyDetail() {
                                 {getStatusIcon(technology.status)} {getStatusName(technology.status)}
                             </span>
                         </div>
-                        <h1>{technology.title}</h1>
+                        <h1 className="color-text">{technology.title}</h1>
                         <p className="creation-date">
                             Добавлено: {new Date().toLocaleDateString('ru-RU')}
                         </p>
                     </div>
 
                     <div className="description-section">
-                        <h2>📝 Описание</h2>
+                        <h2 className="color-text">📝 Описание</h2>
                         <p className="tech-description">{technology.description}</p>
                     </div>
 
                     <div className="status-section">
-                        <h2>📊 Статус изучения</h2>
+                        <h2 className="color-text">📊 Статус изучения</h2>
                         <div className="status-indicator">
                             <div className="status-visual">
-                                <div className={`status-circle ${technology.status}`}>
-                                    {getStatusIcon(technology.status)}
+                                <div className="status-circle-container">
+                                    <div className={`status-circle ${technology.status}`}>
+                                        {getStatusIcon(technology.status)}
+                                    </div>
+                                    <p className="status-circle-label">{getStatusName(technology.status)}</p>
                                 </div>
+
                                 <div className="status-info">
-                                    <h3>{getStatusName(technology.status)}</h3>
-                                    <button onClick={handleStatusChange} className="status-change-btn">
-                                        Сменить на {getStatusName(getNextStatus())} →
-                                    </button>
+                                    <h3>Текущий статус</h3>
+                                    <p className="status-description">
+                                        {technology.status === 'completed' ? 'Технология полностью изучена' :
+                                            technology.status === 'in-progress' ? 'В процессе изучения' :
+                                                'Изучение еще не начато'}
+                                    </p>
+
+                                    <div className="status-actions">
+                                        <button onClick={handleStatusChange} className="status-change-btn">
+                                            Сменить на {getNextStatusName()} →
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                            
+
                             <div className="status-progress">
                                 <ProgressBar
                                     progress={
                                         technology.status === 'completed' ? 100 :
-                                        technology.status === 'in-progress' ? 50 : 0
+                                            technology.status === 'in-progress' ? 50 : 0
                                     }
-                                    height={12}
+                                    height={20}
                                     color={
                                         technology.status === 'completed' ? '#4CAF50' :
-                                        technology.status === 'in-progress' ? '#FF9800' : '#f44336'
+                                            technology.status === 'in-progress' ? '#FF9800' : '#f44336'
                                     }
                                     animated={technology.status === 'in-progress'}
                                     showPercentage={false}
@@ -200,7 +222,7 @@ function TechnologyDetail() {
                                 {isEditingNotes ? '❌ Отмена' : '✏️ Редактировать'}
                             </button>
                         </div>
-                        
+
                         {isEditingNotes ? (
                             <div className="notes-editor">
                                 <textarea
