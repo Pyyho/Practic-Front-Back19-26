@@ -1,0 +1,32 @@
+.card-wrapper {
+    padding: 5px;
+    border-radius: 14px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Занимаем всю высоту */
+}
+
+.card-wrapper.completed {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+}
+
+.card-wrapper.in-progress {
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+
+.card-wrapper.not-started {
+    background: linear-gradient(135deg, #ffebee, #ffcdd2);
+}
+
+.card-wrapper:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Обеспечиваем растягивание карточки внутри обертки */
+.card-wrapper > * {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}

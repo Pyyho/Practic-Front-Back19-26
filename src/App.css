@@ -1,0 +1,945 @@
+:root {
+    /* Светлая тема по умолчанию */
+    --primary-color: #667eea;
+    --primary-hover: #5a67d8;
+    --secondary-color: #805ad5;
+    --success-color: #38a169;
+    --warning-color: #d69e2e;
+    --danger-color: #e53e3e;
+    --info-color: #3182ce;
+
+    --bg-color: #ffffff;
+    --bg-secondary: #f7fafc;
+    --bg-tertiary: #edf2f7;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+
+    --text-primary: #2d3748;
+    --text-secondary: #4a5568;
+    --text-tertiary: #718096;
+
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+
+    --radius-sm: 0.25rem;
+    --radius: 0.5rem;
+    --radius-lg: 0.75rem;
+}
+
+/* Размеры шрифтов */
+:root {
+    font-size: var(--font-size-base);
+}
+
+#root {
+    min-height: 100vh;
+}
+
+.theme-transition * {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Отключение анимаций */
+.no-transitions * {
+    transition: none !important;
+}
+
+/* Отключение анимаций */
+.no-animations * {
+    transition: none !important;
+    animation: none !important;
+}
+
+[data-theme="dark"] {
+    --primary-color: #7f9cf5;
+    --primary-hover: #667eea;
+    --secondary-color: #9f7aea;
+    --success-color: #68d391;
+    --warning-color: #f6e05e;
+    --danger-color: #fc8181;
+    --info-color: #76e4f7;
+
+    --bg-color: #1a202c;
+    --bg-secondary: #2d3748;
+    --bg-tertiary: #4a5568;
+    --card-bg: #2d3748;
+    --card-border: #4a5568;
+
+    --text-primary: #f7fafc;
+    --text-secondary: #e2e8f0;
+    --text-tertiary: #cbd5e0;
+
+    --border-color: #4a5568;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+/* Базовые стили для приложения */
+.App {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.main-content {
+    width: 100%;
+    margin-top: 20px;
+    background-color: var(--bg-color);
+}
+
+.page {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+.page-header h1 {
+    color: var(--text-primary);
+    margin: 0 0 15px 0;
+    font-size: 2.5em;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.page-header p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 1.2em;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    font-size: var(--font-size-base);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Стили для заголовка приложения */
+.App-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.App-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    pointer-events: none;
+}
+
+.App-header h1 {
+    margin: 0 0 15px 0;
+    font-size: 2.5em;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+}
+
+.App-header p {
+    margin: 0;
+    font-size: 1.2em;
+    opacity: 0.9;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+}
+
+/* Стили для контейнера с технологиями */
+.technologies-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 1000px;
+}
+
+.technologies-container h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #667eea;
+}
+
+.technologies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+    align-items: stretch;
+    justify-items: center;
+    /* Центрируем карточки в ячейках */
+}
+
+.technologies-grid>* {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .technologies-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .technologies-container {
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .technologies-container h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .technologies-grid {
+        gap: 10px;
+    }
+
+    .technologies-container {
+        padding: 10px;
+    }
+}
+
+/* Глобальные стили */
+
+
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.technology-card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Сообщение при отсутствии результатов */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 12px;
+    border: 2px dashed #ddd;
+    color: #666;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.technology-filter,
+.category-filter {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-btn {
+    padding: 12px 24px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    color: #333;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+}
+
+.no-results p:first-child {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #f44336;
+}
+
+.no-results p:last-child {
+    color: #78909c;
+    font-size: 0.95em;
+}
+
+/* Анимация для изменения статуса */
+@keyframes statusGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+    }
+
+    100% {
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0);
+    }
+}
+
+.status-updating {
+    animation: statusGlow 1s ease;
+}
+
+/* Статистика в реальном времени */
+.live-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.live-stat-item {
+    text-align: center;
+}
+
+.live-stat-value {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.live-stat-label {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Добавьте эти стили в конец файла App.css */
+
+/* Стили для поля поиска */
+.search-box {
+    background: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 1000px;
+    justify-content: center;
+}
+
+.progress-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1000px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.search-results-count {
+    background: #667eea;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* Адаптивность для поиска */
+@media (max-width: 768px) {
+    .search-box {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .search-box input {
+        width: 100%;
+    }
+
+    .search-results-count {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .App {
+        padding: 15px;
+    }
+
+    .page-header {
+        padding: 20px;
+    }
+
+    .page-header h1 {
+        font-size: 2em;
+    }
+
+    .App-header {
+        padding: 20px;
+    }
+
+    .technologies-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .category-bars {
+        flex-direction: column;
+    }
+
+    .search-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .search-box input {
+        width: 100%;
+    }
+
+    .progress-header {
+        padding: 20px;
+    }
+
+    .quick-actions {
+        padding: 20px;
+    }
+
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .technologies-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .technologies-container {
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .technologies-container h2 {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .technologies-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .technologies-container {
+        padding: 15px;
+    }
+
+    .App-header h1 {
+        font-size: 2em;
+    }
+
+    .filter-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter-btn {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h1 {
+        font-size: 1.8em;
+    }
+
+    .page {
+        padding: 20px;
+    }
+}
+
+.card-wrapper {
+    padding: 5px;
+    border-radius: 14px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    color: var(--text-primary);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  border: none;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.button-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.home-page,
+.settings-page,
+.add-tech-page,
+.login-page {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Общий прогресс-бар в шапке */
+.overall-progress-bar {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+/* Статистика по категориям */
+.category-stats {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 1000px;
+    border: 2px solid #e9ecef;
+}
+
+.category-stats h3 {
+    margin: 0 0 20px 0;
+    color: #2c3e50;
+    font-size: 1.3em;
+    text-align: center;
+    font-weight: 700;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.category-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-top: 15px;
+}
+
+.category-stat-item {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px solid #e9ecef;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.category-stat-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.category-stat-item:nth-child(1) {
+    border-left: 5px solid #2196F3;
+}
+
+.category-stat-item:nth-child(2) {
+    border-left: 5px solid #FF9800;
+}
+
+.category-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.category-name {
+    font-weight: 700;
+    color: #495057;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-progress {
+    font-weight: 800;
+    color: #667eea;
+    font-size: 1.4em;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.category-details {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 0.95em;
+    color: #6c757d;
+    background: rgba(108, 117, 125, 0.05);
+    padding: 8px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.quick-actions {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 25px;
+    border-radius: 12px;
+    margin: 25px 0;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* Контейнер для фильтров */
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* Фильтр по категориям */
+.category-filter {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-filter h3 {
+    margin: 0 0 15px 0;
+    color: #333;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+/* Контент модалки экспорта */
+.export-modal-content {
+    text-align: center;
+}
+
+.export-modal-content p {
+    margin: 15px 0;
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+.export-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.export-info ul {
+    margin: 10px 0 0 0;
+    padding-left: 20px;
+}
+
+.export-info li {
+    margin: 8px 0;
+    color: #495057;
+}
+
+.modal-close-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.modal-close-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .filters-container {
+        grid-template-columns: 1fr;
+    }
+
+    .category-bars {
+        grid-template-columns: 1fr;
+    }
+
+    .overall-progress-bar {
+        margin: 15px auto 0;
+        padding: 12px;
+    }
+}
+
+.category-stat-item.category-frontend {
+    border-left: 6px solid #2196F3;
+    background: linear-gradient(135deg, #f8fbff, #ffffff);
+}
+
+.category-stat-item.category-backend {
+    border-left: 6px solid #FF9800;
+    background: linear-gradient(135deg, #fffbf5, #ffffff);
+}
+
+.category-tech-count {
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-left: 8px;
+    font-weight: 500;
+}
+
+.category-progress-bar-wrapper {
+    margin: 15px 0;
+}
+
+.completed-count {
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 8px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.completed-count strong {
+    color: #667eea;
+}
+
+.category-hint {
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.category-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #e9ecef, transparent);
+    margin: 20px 0 0;
+}
+
+/* Общая статистика категорий */
+.category-total {
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
+    border-radius: 12px;
+    border: 2px dashed #dee2e6;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.total-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.total-label {
+    font-weight: 600;
+    color: #495057;
+    font-size: 1.1em;
+}
+
+.total-value {
+    font-weight: 800;
+    color: #667eea;
+    font-size: 1.8em;
+    background: rgba(102, 126, 234, 0.1);
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.total-hint {
+    font-size: 0.9em;
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Индикаторы состояния */
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status-indicator.completed {
+    background: #4CAF50;
+}
+
+.status-indicator.in-progress {
+    background: #FF9800;
+}
+
+.status-indicator.not-started {
+    background: #f44336;
+}
+
