@@ -77,6 +77,8 @@ function Settings() {
 
     useEffect(() => {
         calculateStorageStats();
+        // Применяем акцентный цвет при загрузке
+        applyAccentColor(settings.accentColor);
     }, []);
 
     
@@ -104,21 +106,165 @@ function Settings() {
             ...prev,
             [key]: value
         }));
+
+        // Если меняется акцентный цвет - применяем его сразу
+        if (key === 'accentColor') {
+            applyAccentColor(value);
+        }
+
+        // Если меняется тема - применяем её сразу
+        if (key === 'theme') {
+            if (value === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+        }
+    };
+
+    const applyAccentColor = (color) => {
+        // Устанавливаем CSS переменную для акцентного цвета
+        document.documentElement.style.setProperty('--accent-color', color);
+        
+        // Также обновляем primary-color для совместимости
+        document.documentElement.style.setProperty('--primary-color', color);
+        
+        // Применяем цвет к элементам, которые должны его использовать
+        const styleElement = document.createElement('style');
+        styleElement.id = 'accent-color-styles';
+        
+        // Генерируем более светлый и темный оттенки для hover эффектов
+        const lighterColor = lightenColor(color, 20);
+        const darkerColor = darkenColor(color, 20);
+        
+        styleElement.textContent = `
+            :root {
+                --accent-color: ${color};
+                --accent-color-light: ${lighterColor};
+                --accent-color-dark: ${darkerColor};
+            }
+            
+            /* Применяем акцентный цвет к элементам */
+            .page-header {
+                background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%) !important;
+            }
+            
+            .save-btn, 
+            .theme-btn.active,
+            .data-btn.export-btn,
+            .modal-btn.confirm {
+                background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%) !important;
+            }
+            
+            .save-btn:hover:not(:disabled),
+            .theme-btn:hover,
+            .data-btn.export-btn:hover,
+            .modal-btn.confirm:hover {
+                background: linear-gradient(135deg, ${lighterColor} 0%, ${color} 100%) !important;
+            }
+            
+            .theme-select:focus,
+            .setting-control select:focus {
+                border-color: ${color} !important;
+                box-shadow: 0 0 0 4px ${color}33 !important;
+            }
+            
+            .theme-btn:hover {
+                border-color: ${color} !important;
+                color: ${color} !important;
+            }
+            
+            .storage-value,
+            .color-text {
+                color: ${color} !important;
+            }
+            
+            input:checked + .slider {
+                background-color: ${color} !important;
+            }
+            
+            input:focus + .slider {
+                box-shadow: 0 0 1px ${color} !important;
+            }
+            
+            .save-btn:not(:disabled) {
+                animation: pulse 2s infinite;
+                box-shadow: 0 0 0 0 ${color}80;
+            }
+            
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                    box-shadow: 0 0 0 0 ${color}80;
+                }
+                70% {
+                    transform: scale(1.05);
+                    box-shadow: 0 0 0 15px ${color}00;
+                }
+                100% {
+                    transform: scale(1);
+                    box-shadow: 0 0 0 0 ${color}00;
+                }
+            }
+            
+            .color-option.active {
+                box-shadow: 0 0 0 3px ${color} !important;
+            }
+        `;
+        
+        // Удаляем старый стиль, если он есть
+        const oldStyle = document.getElementById('accent-color-styles');
+        if (oldStyle) {
+            oldStyle.remove();
+        }
+        
+        // Добавляем новый стиль
+        document.head.appendChild(styleElement);
+    };
+
+    // Функции для изменения оттенков цвета
+    const lightenColor = (color, percent) => {
+        const num = parseInt(color.replace("#", ""), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) + amt;
+        const G = (num >> 8 & 0x00FF) + amt;
+        const B = (num & 0x0000FF) + amt;
+        
+        return "#" + (
+            0x1000000 + 
+            (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + 
+            (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + 
+            (B < 255 ? B < 1 ? 0 : B : 255)
+        ).toString(16).slice(1);
+    };
+
+    const darkenColor = (color, percent) => {
+        const num = parseInt(color.replace("#", ""), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) - amt;
+        const G = (num >> 8 & 0x00FF) - amt;
+        const B = (num & 0x0000FF) - amt;
+        
+        return "#" + (
+            0x1000000 + 
+            (R > 0 ? R : 0) * 0x10000 + 
+            (G > 0 ? G : 0) * 0x100 + 
+            (B > 0 ? B : 0)
+        ).toString(16).slice(1);
     };
 
     const saveSettings = () => {
         setLoading(true);
         localStorage.setItem('appSettings', JSON.stringify(settings));
         
-        // Применяем тему сразу
+        // Применяем тему и цвет
         if (settings.theme === 'dark') {
             document.documentElement.setAttribute('data-theme', 'dark');
         } else {
             document.documentElement.removeAttribute('data-theme');
         }
-
-        // Применяем акцентный цвет
-        document.documentElement.style.setProperty('--primary-color', settings.accentColor);
+        
+        applyAccentColor(settings.accentColor);
 
         setTimeout(() => {
             setSaveMessage('✅ Настройки успешно сохранены!');
@@ -203,6 +349,8 @@ function Settings() {
                     if (data.settings) {
                         localStorage.setItem('appSettings', JSON.stringify(data.settings));
                         setSettings(prev => ({ ...prev, ...data.settings }));
+                        // Применяем новые настройки
+                        applyAccentColor(data.settings.accentColor || settings.accentColor);
                     }
                     
                     calculateStorageStats();
@@ -222,7 +370,7 @@ function Settings() {
 
     const resetAllData = () => {
         localStorage.clear();
-        setSettings({
+        const defaultSettings = {
             theme: 'light',
             accentColor: '#667eea',
             fontSize: 'medium',
@@ -246,7 +394,12 @@ function Settings() {
             storageUsed: '0 KB',
             technologiesCount: 0,
             lastBackup: null
-        });
+        };
+        
+        setSettings(defaultSettings);
+        // Применяем дефолтные настройки
+        document.documentElement.removeAttribute('data-theme');
+        applyAccentColor('#667eea');
         
         setSaveMessage('✅ Все данные сброшены к заводским настройкам!');
         setTimeout(() => {
@@ -271,7 +424,7 @@ function Settings() {
     };
 
     const resetToDefaults = () => {
-        setSettings({
+        const defaultSettings = {
             theme: 'light',
             accentColor: '#667eea',
             fontSize: 'medium',
@@ -295,7 +448,12 @@ function Settings() {
             storageUsed: settings.storageUsed,
             technologiesCount: settings.technologiesCount,
             lastBackup: settings.lastBackup
-        });
+        };
+        
+        setSettings(defaultSettings);
+        // Применяем дефолтные настройки
+        document.documentElement.removeAttribute('data-theme');
+        applyAccentColor('#667eea');
         
         setSaveMessage('✅ Настройки сброшены к значениям по умолчанию!');
         setTimeout(() => setSaveMessage(''), 3000);
@@ -317,7 +475,7 @@ function Settings() {
             <div className="settings-sections">
                 {/* Внешний вид */}
                 <div className="settings-section">
-                    <h2 className = "color-text"><FaPalette /> Внешний вид</h2>
+                    <h2 className="color-text"><FaPalette /> Внешний вид</h2>
                     
                     <div className="setting-item">
                         <div className="setting-info">
@@ -406,7 +564,7 @@ function Settings() {
 
                 {/* Уведомления */}
                 <div className="settings-section">
-                    <h2 className = "color-text"><FaBell /> Уведомления</h2>
+                    <h2 className="color-text"><FaBell /> Уведомления</h2>
                     
                     <div className="setting-item">
                         <div className="setting-info">
@@ -479,7 +637,7 @@ function Settings() {
 
                 {/* Приватность */}
                 <div className="settings-section">
-                    <h2 className = "color-text"><FaLock /> Приватность</h2>
+                    <h2 className="color-text"><FaLock /> Приватность</h2>
                     
                     <div className="setting-item">
                         <div className="setting-info">
@@ -536,7 +694,7 @@ function Settings() {
 
                 {/* Данные и резервные копии */}
                 <div className="settings-section">
-                    <h2 className = "color-text"><FaDatabase /> Данные и резервные копии</h2>
+                    <h2 className="color-text"><FaDatabase /> Данные и резервные копии</h2>
                     
                     <div className="data-actions">
                         <button onClick={() => handleDataAction('export')} className="data-btn export-btn">
@@ -635,7 +793,7 @@ function Settings() {
 
                 {/* Дополнительно */}
                 <div className="settings-section">
-                    <h2 className = "color-text"><FaLanguage /> Язык и дополнительные настройки</h2>
+                    <h2 className="color-text"><FaLanguage /> Язык и дополнительные настройки</h2>
                     
                     <div className="setting-item">
                         <div className="setting-info">

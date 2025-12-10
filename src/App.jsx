@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './App.css';
 
+import useTechnologiesApi from './hooks/useTechnologiesApi';
+
 // Контекст настроек
 import { SettingsProvider } from './context/SettingsContext';
 
@@ -19,6 +21,7 @@ import Settings from './pages/Settings';
 import Login from './pages/Login';
 
 function App() {
+    const { technologies, loading, error, refetch } = useTechnologiesApi();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState('');
 
@@ -54,6 +57,20 @@ function App() {
                     <main className="main-content">
                         <Routes>
                             <Route path="/" element={<Home />} />
+
+                            <Route
+                                path="/technologies"
+                                element={
+                                    <ProtectedRoute isLoggedIn={isLoggedIn}>
+                                        <TechnologyList
+                                            technologies={technologies}
+                                            loading={loading}
+                                            error={error}
+                                            refetch={refetch}
+                                        />
+                                    </ProtectedRoute>
+                                }
+                            />
 
                             <Route
                                 path="/login"

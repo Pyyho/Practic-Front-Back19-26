@@ -14,8 +14,7 @@ import {
 } from 'react-icons/fa';
 import './TechnologyList.css';
 
-function TechnologyList() {
-    const [technologies, setTechnologies] = useState([]);
+function TechnologyList({ technologies, loading, error, refetch }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const [categoryFilter, setCategoryFilter] = useState('all');
