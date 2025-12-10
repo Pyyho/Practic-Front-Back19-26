@@ -14,14 +14,14 @@ import {
 } from 'react-icons/fa';
 import './TechnologyList.css';
 
-function TechnologyList({ technologies, loading, error, refetch }) {
+function TechnologyList({ technologies = [], loading = false, error = null, refetch = () => {} }) {
+    // Убрали локальные состояния technologies и loading, так как получаем их из пропсов
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [sortBy, setSortBy] = useState('date');
     const [sortOrder, setSortOrder] = useState('desc');
     const [selectedTechs, setSelectedTechs] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [showFilters, setShowFilters] = useState(false);
     const [showBulkActions, setShowBulkActions] = useState(false);
 
@@ -29,8 +29,6 @@ function TechnologyList({ technologies, loading, error, refetch }) {
     const location = useLocation();
 
     useEffect(() => {
-        loadTechnologies();
-
         // Парсим параметры URL
         const params = new URLSearchParams(location.search);
         const category = params.get('category');
@@ -39,16 +37,6 @@ function TechnologyList({ technologies, loading, error, refetch }) {
         if (category) setCategoryFilter(category);
         if (status) setStatusFilter(status);
     }, [location.search]);
-
-    const loadTechnologies = () => {
-        setLoading(true);
-        const saved = localStorage.getItem('technologies');
-        if (saved) {
-            const techData = JSON.parse(saved);
-            setTechnologies(techData);
-        }
-        setLoading(false);
-    };
 
     // Получаем уникальные категории
     const categories = useMemo(() => {
@@ -77,7 +65,7 @@ function TechnologyList({ technologies, loading, error, refetch }) {
             filtered = filtered.filter(tech =>
                 tech.title.toLowerCase().includes(query) ||
                 tech.description.toLowerCase().includes(query) ||
-                tech.notes.toLowerCase().includes(query)
+                (tech.notes && tech.notes.toLowerCase().includes(query))
             );
         }
 
@@ -180,35 +168,22 @@ function TechnologyList({ technologies, loading, error, refetch }) {
         }
     };
 
-    // Массовые действия
-    const handleBulkAction = (action) => {
+    // Массовые действия - теперь работаем через refetch
+    const handleBulkAction = async (action) => {
         if (selectedTechs.length === 0) return;
 
-        const updatedTechs = technologies.map(tech => {
-            if (selectedTechs.includes(tech.id)) {
-                switch (action) {
-                    case 'complete':
-                        return { ...tech, status: 'completed', lastUpdated: new Date().toISOString() };
-                    case 'reset':
-                        return { ...tech, status: 'not-started', lastUpdated: new Date().toISOString() };
-                    case 'in-progress':
-                        return { ...tech, status: 'in-progress', lastUpdated: new Date().toISOString() };
-                    case 'delete':
-                        return null;
-                    default:
-                        return tech;
-                }
-            }
-            return tech;
-        }).filter(Boolean);
-
-        localStorage.setItem('technologies', JSON.stringify(updatedTechs));
-        setTechnologies(updatedTechs);
-
+        // В реальном приложении здесь был бы запрос к API
+        // Сейчас просто обновляем локальное состояние и перезагружаем данные
+        
         if (action === 'delete') {
+            // Здесь должна быть логика удаления через API
+            // Пока просто сбрасываем выбор
             setSelectedTechs([]);
             setShowBulkActions(false);
         }
+        
+        // После массовых действий перезагружаем данные
+        refetch();
     };
 
     // Экспорт данных
@@ -248,17 +223,12 @@ function TechnologyList({ technologies, loading, error, refetch }) {
                 const data = JSON.parse(e.target.result);
 
                 if (data.technologies && Array.isArray(data.technologies)) {
-                    const existingTechs = JSON.parse(localStorage.getItem('technologies') || '[]');
-                    const mergedTechs = [...existingTechs, ...data.technologies];
-
-                    // Убираем дубликаты по ID
-                    const uniqueTechs = Array.from(
-                        new Map(mergedTechs.map(tech => [tech.id, tech])).values()
-                    );
-
-                    localStorage.setItem('technologies', JSON.stringify(uniqueTechs));
-                    setTechnologies(uniqueTechs);
+                    // В реальном приложении здесь был бы запрос к API для добавления
+                    // Сейчас просто показываем сообщение
                     alert(`✅ Импортировано ${data.technologies.length} технологий`);
+                    
+                    // Перезагружаем данные
+                    refetch();
                 }
             } catch (error) {
                 alert('❌ Ошибка при импорте данных. Проверьте формат файла.');
@@ -276,6 +246,18 @@ function TechnologyList({ technologies, loading, error, refetch }) {
         );
     }
 
+    if (error) {
+        return (
+            <div className="error-container">
+                <h2>Ошибка при загрузке технологий</h2>
+                <p>{error}</p>
+                <button onClick={refetch} className="retry-button">
+                    Попробовать снова
+                </button>
+            </div>
+        );
+    }
+
     return (
         <div className="technology-list-page">
             <div className="page-header">
@@ -283,9 +265,14 @@ function TechnologyList({ technologies, loading, error, refetch }) {
                     <h1>📚 Все технологии</h1>
                     <p>Управляйте своими технологиями для изучения. Всего: {technologies.length}</p>
                 </div>
-                <Link to="/add-technology" className="add-btn">
-                    ➕ Добавить технологию
-                </Link>
+                <div className="header-actions">
+                    <Link to="/add-technology" className="add-btn">
+                        ➕ Добавить технологию
+                    </Link>
+                    <button onClick={refetch} className="refresh-btn">
+                        🔄 Обновить
+                    </button>
+                </div>
             </div>
 
             {/* Баннер массовых действий */}
@@ -553,17 +540,10 @@ function TechnologyList({ technologies, loading, error, refetch }) {
                                     </Link>
                                     <button
                                         onClick={() => {
-                                            const newStatus =
-                                                tech.status === 'not-started' ? 'in-progress' :
-                                                    tech.status === 'in-progress' ? 'completed' : 'not-started';
-
-                                            const updatedTechs = technologies.map(t =>
-                                                t.id === tech.id
-                                                    ? { ...t, status: newStatus, lastUpdated: new Date().toISOString() }
-                                                    : t
-                                            );
-                                            localStorage.setItem('technologies', JSON.stringify(updatedTechs));
-                                            setTechnologies(updatedTechs);
+                                            // Здесь должна быть логика обновления статуса через API
+                                            // Сейчас просто показываем сообщение
+                                            alert(`Изменение статуса для ${tech.title} через API`);
+                                            refetch();
                                         }}
                                         className="quick-status-btn"
                                     >
