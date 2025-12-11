@@ -4,12 +4,16 @@ import './Navigation.css';
 
 function Navigation({ isLoggedIn, username, onLogout }) {
     const location = useLocation();
+
+    // Добавляем состояние для меню
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    // Функция для переключения меню (открыть/закрыть)
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    // Функция для закрытия меню
     const closeMenu = () => {
         setIsMenuOpen(false);
     };
@@ -22,16 +26,12 @@ function Navigation({ isLoggedIn, username, onLogout }) {
                 </Link>
             </div>
 
-            {/* Бургер-меню для мобильных */}
-            <button 
-                className="burger-menu-btn" 
-                onClick={toggleMenu}
-                aria-label="Открыть меню"
-            >
-                <span className={`burger-line ${isMenuOpen ? 'active' : ''}`}></span>
-                <span className={`burger-line ${isMenuOpen ? 'active' : ''}`}></span>
-                <span className={`burger-line ${isMenuOpen ? 'active' : ''}`}></span>
-            </button>
+            {/* Гамбургер-меню для мобильных устройств */}
+            <div className="hamburger" onClick={toggleMenu}>
+                <div className={`bar ${isMenuOpen ? 'active' : ''}`}></div>
+                <div className={`bar ${isMenuOpen ? 'active' : ''}`}></div>
+                <div className={`bar ${isMenuOpen ? 'active' : ''}`}></div>
+            </div>
 
             <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
                 <li>
@@ -79,7 +79,7 @@ function Navigation({ isLoggedIn, username, onLogout }) {
                         ⚙️ Настройки
                     </Link>
                 </li>
-                
+
                 {isLoggedIn ? (
                     <li className="user-info">
                         <span className="user-greeting">👤 Привет, {username}!</span>

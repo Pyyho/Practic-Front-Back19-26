@@ -7,7 +7,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
+    position: static;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
@@ -153,7 +153,7 @@
         width: 90%;
         padding: 0 20px;
     }
-    
+
     .nav-menu {
         gap: 15px;
     }
@@ -226,12 +226,12 @@
     .nav-brand h2 {
         font-size: 1.3em;
     }
-    
+
     .nav-menu {
         width: 100%;
         right: -100%;
     }
-    
+
     .nav-menu.active {
         right: 0;
     }
