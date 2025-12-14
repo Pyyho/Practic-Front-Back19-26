@@ -280,3 +280,16 @@
     color: black;
 }
 
+[data-theme="dark"] .form-row
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #000000;
+}
+
+[data-theme="dark"] .form-group select
+ {
+    background: #728699;
+    color: #ecf0f1;
+    border-color: #ffffff;
+}

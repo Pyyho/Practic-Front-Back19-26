@@ -23,12 +23,15 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    color: white;
 }
+
 
 .header-content p {
     margin: 0;
     font-size: 1.1em;
     opacity: 0.9;
+    color: white;
 }
 
 .export-btn {
@@ -901,9 +904,9 @@
 }
 
 [data-theme="dark"] .achievement-card.unlocked {
-    background: #628bb4;
+    background: #fcfdff;
     color: #ecf0f1;
-    border-color: #ffffff;
+    border-color: #000000;
 }
 
 [data-theme="dark"] .stats-section {
