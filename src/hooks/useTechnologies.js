@@ -8,7 +8,10 @@ const initialTechnologies = [
         description: 'Изучение функциональных и классовых компонентов, их жизненного цикла и лучших практик',
         status: 'not-started',
         notes: '',
-        category: 'frontend'
+        category: 'frontend',
+        addedDate: '9 дек. 2025 г.',
+        updatedDate: '9 дек. 2025 г.',
+        progress: 100
     },
     {
         id: 2,
@@ -16,7 +19,10 @@ const initialTechnologies = [
         description: 'Освоение синтаксиса JSX, работа с выражениями JavaScript в разметке',
         status: 'not-started',
         notes: '',
-        category: 'frontend'
+        category: 'frontend',
+        addedDate: 'Invalid Date',
+        updatedDate: '6 дек. 2025 г.',
+        progress: 0
     },
     {
         id: 3,
@@ -24,7 +30,10 @@ const initialTechnologies = [
         description: 'Работа с состоянием компонентов, использование хуков useState и useEffect',
         status: 'not-started',
         notes: '',
-        category: 'frontend'
+        category: 'frontend',
+        addedDate: 'Invalid Date',
+        updatedDate: '6 дек. 2025 г.',
+        progress: 0
     },
     {
         id: 4,
@@ -32,7 +41,10 @@ const initialTechnologies = [
         description: 'Передача данных между компонентами через props, валидация пропсов',
         status: 'completed',
         notes: '',
-        category: 'frontend'
+        category: 'frontend',
+        addedDate: 'Invalid Date',
+        updatedDate: '6 дек. 2025 г.',
+        progress: 100
     },
     {
         id: 5,
@@ -40,7 +52,10 @@ const initialTechnologies = [
         description: 'Обработка событий в React, синтетические события',
         status: 'in-progress',
         notes: '',
-        category: 'frontend'
+        category: 'frontend',
+        addedDate: 'Invalid Date',
+        updatedDate: '6 дек. 2025 г.',
+        progress: 0
     },
     {
         id: 6,
@@ -48,7 +63,10 @@ const initialTechnologies = [
         description: 'Условный рендеринг компонентов на основе состояния приложения',
         status: 'not-started',
         notes: '',
-        category: 'frontend'
+        category: 'frontend',
+        addedDate: 'Invalid Date',
+        updatedDate: '6 дек. 2025 г.',
+        progress: 100
     },
     {
         id: 7,
@@ -56,7 +74,10 @@ const initialTechnologies = [
         description: 'Основы серверного JavaScript, запуск сервера',
         status: 'not-started',
         notes: '',
-        category: 'backend'
+        category: 'backend',
+        addedDate: 'Invalid Date',
+        updatedDate: '6 дек. 2025 г.',
+        progress: 100
     },
     {
         id: 8,
@@ -64,18 +85,37 @@ const initialTechnologies = [
         description: 'Создание REST API с использованием Express.js',
         status: 'not-started',
         notes: '',
-        category: 'backend'
+        category: 'backend',
+        addedDate: 'Invalid Date',
+        updatedDate: '6 дек. 2025 г.',
+        progress: 0
     }
 ];
 
 function useTechnologies() {
+    // Используем localStorage для хранения данных
     const [technologies, setTechnologies] = useLocalStorage('technologies', initialTechnologies);
+
+    // Проверяем, если в localStorage пусто, то инициализируем начальными данными
+    React.useEffect(() => {
+        if (!technologies || technologies.length === 0) {
+            setTechnologies(initialTechnologies);
+        }
+    }, []);
 
     // Функция для обновления статуса технологии
     const updateStatus = (techId, newStatus) => {
         setTechnologies(prev =>
             prev.map(tech =>
-                tech.id === techId ? { ...tech, status: newStatus } : tech
+                tech.id === techId ? { 
+                    ...tech, 
+                    status: newStatus,
+                    updatedDate: new Date().toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric'
+                    })
+                } : tech
             )
         );
     };
@@ -84,22 +124,70 @@ function useTechnologies() {
     const updateNotes = (techId, newNotes) => {
         setTechnologies(prev =>
             prev.map(tech =>
-                tech.id === techId ? { ...tech, notes: newNotes } : tech
+                tech.id === techId ? { 
+                    ...tech, 
+                    notes: newNotes,
+                    updatedDate: new Date().toLocaleDateString('ru-RU', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric'
+                    })
+                } : tech
             )
         );
+    };
+
+    // Функция для добавления новой технологии
+    const addTechnology = (newTech) => {
+        const techToAdd = {
+            ...newTech,
+            id: Date.now(),
+            addedDate: new Date().toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            }),
+            updatedDate: new Date().toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            }),
+            progress: newTech.status === 'completed' ? 100 : 0
+        };
+        
+        setTechnologies(prev => [...prev, techToAdd]);
+        return techToAdd;
     };
 
     // Функция для отметки всех как выполненных
     const markAllCompleted = () => {
         setTechnologies(prev =>
-            prev.map(tech => ({ ...tech, status: 'completed' }))
+            prev.map(tech => ({ 
+                ...tech, 
+                status: 'completed',
+                progress: 100,
+                updatedDate: new Date().toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                })
+            }))
         );
     };
 
     // Функция для сброса всех статусов
     const resetAllStatuses = () => {
         setTechnologies(prev =>
-            prev.map(tech => ({ ...tech, status: 'not-started' }))
+            prev.map(tech => ({ 
+                ...tech, 
+                status: 'not-started',
+                progress: 0,
+                updatedDate: new Date().toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                })
+            }))
         );
     };
 
@@ -118,7 +206,7 @@ function useTechnologies() {
 
     // Функция для получения статистики по категориям
     const getCategoryStats = () => {
-        const categories = ['frontend', 'backend'];
+        const categories = ['frontend', 'backend', 'tools'];
         return categories.map(category => {
             const categoryTechs = technologies.filter(tech => tech.category === category);
             const completed = categoryTechs.filter(tech => tech.status === 'completed').length;
@@ -138,6 +226,7 @@ function useTechnologies() {
         setTechnologies,
         updateStatus,
         updateNotes,
+        addTechnology,
         markAllCompleted,
         resetAllStatuses,
         progress: calculateProgress(),
