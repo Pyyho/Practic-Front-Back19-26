@@ -1,251 +1,121 @@
-// src/hooks/useTechnologiesApi.js
-
-import { useState, useEffect } from 'react';
-
-
+// src/hooks/useTechnologiesApi.js - ВЕРСИЯ С РЕАЛЬНЫМ API
+import { useState, useEffect, useCallback } from 'react';
 
 function useTechnologiesApi() {
-
     const [technologies, setTechnologies] = useState([]);
-
     const [loading, setLoading] = useState(true);
-
     const [error, setError] = useState(null);
 
+    const API_URL = 'https://api.github.com/search/repositories?q=topic:react';
+    const USE_MOCK_DATA = true;
 
-
-    // Загрузка технологий из API
-
-    const fetchTechnologies = async () => {
-
+    const fetchTechnologies = useCallback(async () => {
         try {
-
             setLoading(true);
-
             setError(null);
 
+            if (USE_MOCK_DATA) {
+                // Моковые данные для демонстрации (как сейчас)
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                const mockTechnologies = [/* твои моковые данные */];
+                setTechnologies(mockTechnologies);
+            } else {
+                // РЕАЛЬНЫЙ ЗАПРОС К API
+                const response = await fetch(`${API_URL}/posts`);
 
-
-            // В реальном приложении здесь будет запрос к вашему API
-
-            // Сейчас имитируем загрузку с задержкой
-
-            await new Promise(resolve => setTimeout(resolve, 1000));
-
-
-
-            // Мок данные - в реальном приложении замените на реальный API
-
-            const mockTechnologies = [
-
-                {
-
-                    id: 1,
-
-                    title: 'React',
-
-                    description: 'Библиотека для создания пользовательских интерфейсов',
-
-                    category: 'frontend',
-
-                    difficulty: 'beginner',
-
-                    resources: ['https://react.dev', 'https://ru.reactjs.org'],
-
-                    progress: 0
-
-                },
-
-                {
-
-                    id: 2,
-
-                    title: 'Node.js',
-
-                    description: 'Среда выполнения JavaScript на сервере',
-
-                    category: 'backend',
-
-                    difficulty: 'intermediate',
-
-                    resources: ['https://nodejs.org', 'https://nodejs.org/ru/docs/'],
-
-                    progress: 0
-
-                },
-
-                {
-
-                    id: 3,
-
-                    title: 'Typescript',
-
-                    description: 'Типизированное надмножество JavaScript',
-
-                    category: 'language',
-
-                    difficulty: 'intermediate',
-
-                    resources: ['https://www.typescriptlang.org'],
-
-                    progress: 0
-
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-            ];
+                const data = await response.json();
 
+                // Преобразуем данные API в формат твоего приложения
+                const transformedData = data.slice(0, 10).map((item, index) => ({
+                    id: item.id,
+                    title: item.title,
+                    description: item.body.substring(0, 100),
+                    category: ['frontend', 'backend', 'tools'][index % 3],
+                    difficulty: ['beginner', 'intermediate', 'advanced'][index % 3],
+                    resources: [`https://jsonplaceholder.typicode.com/posts/${item.id}`],
+                    status: 'not-started',
+                    progress: 0,
+                    createdAt: new Date().toISOString()
+                }));
 
-
-            setTechnologies(mockTechnologies);
-
-
+                setTechnologies(transformedData);
+            }
 
         } catch (err) {
-
-            setError('Не удалось загрузить технологии');
-
+            setError(`Не удалось загрузить технологии: ${err.message}`);
             console.error('Ошибка загрузки:', err);
-
         } finally {
-
             setLoading(false);
-
         }
-
-    };
-
-
-
-    // Добавление новой технологии
-
-    const addTechnology = async (techData) => {
-
-        try {
-
-            // Имитация API запроса
-
-            await new Promise(resolve => setTimeout(resolve, 500));
-
-
-
-            const newTech = {
-
-                id: Date.now(), // В реальном приложении ID генерируется на сервере
-
-                ...techData,
-
-                createdAt: new Date().toISOString(),
-
-                progress: 0
-
-            };
-
-
-
-            setTechnologies(prev => [...prev, newTech]);
-
-            return newTech;
-
-
-
-        } catch (err) {
-
-            throw new Error('Не удалось добавить технологию');
-
-        }
-
-    };
-
-
-
-    // Обновление технологии
-
-    const updateTechnology = async (id, updatedData) => {
-
-        try {
-
-            await new Promise(resolve => setTimeout(resolve, 300));
-
-
-
-            setTechnologies(prev =>
-
-                prev.map(tech =>
-
-                    tech.id === id ? { ...tech, ...updatedData } : tech
-
-                )
-
-            );
-
-
-
-            return true;
-
-        } catch (err) {
-
-            throw new Error('Не удалось обновить технологию');
-
-        }
-
-    };
-
-
-
-    // Удаление технологии
-
-    const deleteTechnology = async (id) => {
-
-        try {
-
-            await new Promise(resolve => setTimeout(resolve, 300));
-
-
-
-            setTechnologies(prev => prev.filter(tech => tech.id !== id));
-
-            return true;
-
-        } catch (err) {
-
-            throw new Error('Не удалось удалить технологию');
-
-        }
-
-    };
-
-
-
-    // Загружаем технологии при монтировании
-
-    useEffect(() => {
-
-        fetchTechnologies();
-
     }, []);
 
+    // Добавление новой технологии
+    const addTechnology = async (techData) => {
+        try {
+            setLoading(true);
 
+            if (USE_MOCK_DATA) {
+                // Моковый ответ
+                await new Promise(resolve => setTimeout(resolve, 500));
+                const newTech = {
+                    id: Date.now(),
+                    ...techData,
+                    createdAt: new Date().toISOString(),
+                    progress: 0
+                };
+                setTechnologies(prev => [...prev, newTech]);
+                return newTech;
+            } else {
+                // РЕАЛЬНЫЙ POST запрос к API
+                const response = await fetch(`${API_URL}/posts`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(techData)
+                });
 
-    return {
+                if (!response.ok) {
+                    throw new Error('Ошибка при добавлении технологии');
+                }
 
-        technologies,
+                const savedTech = await response.json();
 
-        loading,
+                // Обновляем локальное состояние
+                setTechnologies(prev => [...prev, {
+                    id: savedTech.id || Date.now(),
+                    ...techData,
+                    createdAt: new Date().toISOString()
+                }]);
 
-        error,
+                return savedTech;
+            }
 
-        refetch: fetchTechnologies,
-
-        addTechnology,
-
-        updateTechnology,
-
-        deleteTechnology
-
+        } catch (err) {
+            throw new Error(`Не удалось добавить технологию: ${err.message}`);
+        } finally {
+            setLoading(false);
+        }
     };
 
+    // Загружаем технологии при монтировании
+    useEffect(() => {
+        fetchTechnologies();
+    }, [fetchTechnologies]);
+
+    return {
+        technologies,
+        loading,
+        error,
+        refetch: fetchTechnologies,
+        addTechnology,
+        updateTechnology, // нужно будет реализовать
+        deleteTechnology  // нужно будет реализовать
+    };
 }
-
-
 
 export default useTechnologiesApi;
